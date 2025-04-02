@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anirudh Joshi - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7F00FF;
+            --secondary: #E100FF;
+            --accent: #00FF87;
+            --dark: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--dark);
+            color: white;
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        /* Animated Background Elements */
+        .blob {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            z-index: -1;
+            animation: float 20s infinite;
+        }
+
+        .blob:nth-child(1) { top: -200px; left: -200px; }
+        .blob:nth-child(2) { bottom: -200px; right: -200px; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(100px, 100px); }
+            50% { transform: translate(-50px, 150px); }
+            75% { transform: translate(-100px, -50px); }
+        }
+
+        /* Header Styles */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            transform: translateY(0);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .main-header.hidden {
+            transform: translateY(-100%);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo a {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Main Layout */
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 100vh;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto;
+            overflow: hidden;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 30px var(--accent);
+            transition: 0.5s;
+        }
+
+        .profile-img:hover {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .intro-text {
+            margin: 2rem 0;
+            font-size: 1.2rem;
+        }
+
+        .intro-text span {
+            display: block;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            animation: slideIn 1s forwards;
+            opacity: 0;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 2rem;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            margin-bottom: 2rem;
+            transform: translateX(50px);
+            opacity: 0;
+            animation: slideInRight 1s forwards;
+        }
+
+        .content-section:nth-child(2) { animation-delay: 0.2s; }
+        .content-section:nth-child(3) { animation-delay: 0.4s; }
+        .content-section:nth-child(4) { animation-delay: 0.6s; }
+
+        h1 {
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        /* Project Cards */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 20px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            font-size: 2rem;
+            color: white;
+            transition: 0.3s;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Scroll Animation */
+        .content-section.visible {
+            animation: sectionSlide 1s forwards;
+        }
+
+        @keyframes sectionSlide {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-section {
+                position: static;
+                margin-bottom: 2rem;
+            }
+
+            .content-section {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .main-header {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .logo a {
+                font-size: 1.2rem;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .project-card a {
+                color: #b8c0c7;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+            .project-card a:hover {
+                color: #ff6600;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <nav>
+            <div class="logo">
+                <a href="#">AJ Formation</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#internships">Internships</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#connect">Connect</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="blob"></div>
+    <div class="blob"></div>
+
+    <div class="container">
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="profile-img">
+                <img src="WhatsApp Image 2025-03-31 at 19.16.51_cd277ec6.jpg" alt="Profile Image">
+            </div>
+            <h1>Anirudh Joshi</h1>
+            <div class="intro-text">
+                <span>🛠️ Code Architect & Problem Solver</span>  
+                <span>⚡ Innovator in Scalable Web Solutions</span>  
+                <span>🚀 Passionate about AI & Future Tech</span>  
+                <span>🌎 Building the Web, One Line at a Time</span> 
+            </div>
+        </div>
+
+        <!-- Main Content -->
+         
+        <main>
+            <!-- Projects Section -->
+            <section class="content-section" id="projects">
+                <h2 style="margin-bottom: 15px;">🌟 Projects</h2>
+                <div class="projects-grid">
+                    <!-- Project cards remain same -->
+                    <div class="project-card">
+                        <h2>🪐Sorting Algorithm Visualizer</h2>
+                        <p> <br> Developed a Sorting Algorithm Visualizer, showcasing
+                            algorithms like Bubble Sort, Quick Sort, and Merge Sort. Leveraged JavaScript to enhance interactivity, allowing
+                            users to see real-time sorting processes. The project demonstrates a clear understanding of algorithmic complexity 
+                            and user experience through dynamic, visual representations of sorting techniques.</p>
+                        <div class="tech-stack">
+                            <h3> <br> React JS</h3>
+                            <h3>Node JS</h3>
+                        </div>
+                        <a href="https://github.com/anirudhJoshi1112/Sorting-Algorithm-Visualizer" target="_blank" rel="noopener noreferrer" style="color: greenyellow; font-size: 18px;">Check Code</a>
+
+                    </div>
+                    <div class="project-card">
+                        <h2>🪐OOP Based Banking Managment System</h2>
+                        <p> <br> Developed an Object-Oriented Banking System using python OOP principles to manage 
+                            customer accounts, transactions, and balances. Features include account
+                            creation, deposits, withdrawals, and balance inquiries. The system ensures 
+                            modularity, reusability, and scalability, with classes for users, accounts, and 
+                            transactions.</p>
+                        <div class="tech-stack">
+                            <h3> <br> Python</h3>
+                            <h3>Object Oriented Programming Concepts</h3>
+                        </div>
+                        <a href="https://github.com/anirudhJoshi1112/Banking-Management-" target="_blank" rel="noopener noreferrer" style="color: greenyellow; font-size: 18px;">Check Code</a>
+                    </div>
+                    <div class="project-card">
+                        <h2>🪐Diabetes Prediction</h2>
+                        <p> <br>  Built a machine learning model to predict diabetes, trained and
+                            tested using the PIMA dataset. The model achieved an accuracy of 80 percent, demonstrating proficiency in data
+                            preprocessing, model selection, and evaluation. Employed techniques like feature engineering and optimization
+                            to improve prediction accuracy for healthcare data applications.
+                            </p>
+                        <div class="tech-stack">
+                            <h3> <br> Machine Learning</h3>
+                            <h3>Support Vector Machine</h3>
+                            <h3>Data Preprocessing</h3>
+                        </div>
+                        <a href="https://github.com/anirudhJoshi1112/Diabetes-Prediction" target="_blank" rel="noopener noreferrer" style="color: greenyellow; font-size: 18px;">Check Code</a>
+                    </div>
+                    <div class="project-card">
+                        <h2>🪐Movie Search and Recommandation</h2>
+                        <p> <br>  The Movie Search App is a React.js-based application that allows users to search for
+                             movies and explore their details using the OMDB API. With a clean and responsive UI,
+                              users can quickly find movies by title and view key details like the plot, actors,
+                               director, and release year. The app dynamically fetches movie data in real time.🚀
+                            </p>
+                        <div class="tech-stack">
+                            <h3> <br> React JS</h3>
+                            <h3> Node JS</h3>
+                            <h3>OMDB API</h3>
+                        </div>
+                        <a href="https://github.com/anirudhJoshi1112/Movie-Search-App" target="_blank" rel="noopener noreferrer" style="color: greenyellow; font-size: 18px;">Check Code</a>
+                    </div>
+                    <!-- Add more project cards -->
+                </div>
+            </section>
+             <!-- Internships Section -->
+            <section class="content-section" id="internships">
+                <h2 style="margin-bottom: 15px;">💼 Internships</h2>
+                <div class="projects-grid">
+                    <!-- Project cards remain same -->
+                    <div class="project-card">
+                        <h2>🪐Java Technology Intern at Infosys SpringBoard</h2>
+                        <p> <br> Successfully completed a Java and Spring Boot Internship at Infosys Springboard, 
+                            where I gained hands-on experience in backend development, designing and implementing 
+                            RESTful APIs, and working with microservices architecture. During the internship, I 
+                            developed scalable and efficient backend solutions, optimized database interactions, 
+                            and ensured seamless integration between services. Additionally, I enhanced my understanding
+                             of enterprise-level application development, best coding practices, and industry standards
+                              while collaborating with experienced professionals. </p>
+                        <div class="tech-stack">
+                            <h3> <br> Java </h3>
+                            <h3> SpringBoot </h3>
+                            <h3> Thymeleaf </h3>
+                        </div>
+                        <a href="https://infyspringboard.onwingspan.com/web/en/login" target="_blank" rel="noopener noreferrer" style="color: greenyellow; font-size: 18px;">Grab Opportunities</a>
+                    </div>
+                    <div class="project-card">
+                        <h2>🪐Web Developer Intern at Hubnex Labs</h2>
+                        <p> <br>  Successfully completed a Frontend Developer Internship at Hubnex Labs, where I focused on building 
+                            dynamic, responsive, and user-friendly interfaces using React.js. My role involved designing and 
+                            implementing reusable components, optimizing website performance, and enhancing the overall user 
+                            experience. I worked closely with the development team to integrate modern frontend practices, 
+                            ensuring seamless responsiveness across devices.</p>
+                        <div class="tech-stack">
+                            <h3> <br> React JS</h3>
+                            <h3> Node JS </h3>
+                            <h3> Express JS </h3>
+                            <h3> Figma </h3>
+                        </div>
+                        <a href="https://www.hubnex.in/" target="_blank" rel="noopener noreferrer" style="color: greenyellow; font-size: 18px;">Grab Opportunities</a>
+                    </div>
+                    <!-- Add more project cards -->
+                </div>
+            </section>
+
+           
+            
+
+            <!-- Skills Section -->
+            <section class="content-section" id="skills">
+                <h2 style="margin-bottom: 15px;">🖇️ Skills</h2>
+                <div class="projects-grid">
+                    <!-- Project cards remain same -->
+                    <div class="project-card">
+                        <h2> 👨🏻‍💻 Web Development </h2>
+                        
+                        <div class="tech-stack" style="color: aqua;">
+                            <h3> <br> HTML </h3>
+                            <h3> CSS </h3>
+                            <h3> JavaScript </h3>
+                            <h3> React JS </h3>
+                            <h3> Node JS </h3>
+                            <h3> Express JS </h3>
+                            <h3> Mongo DB </h3>
+                        </div>
+                        <a href="https://github.com/anirudhJoshi1112" target="_blank" rel="noopener noreferrer" style="color: greenyellow; font-size: 18px;"><br>Check Out Projects on GitHub</a>
+                    </div>
+                    <div class="project-card">
+                        <h2> ☕ Java </h2>
+                        
+                        <div class="tech-stack" style="color: aqua;">
+                            <h3> <br> Core Java </h3>
+                            <h3> Spring Boot </h3>
+                            <h3> Spring Data JPA</h3>
+                            <h3> Thymeleaf </h3>
+                        </div>
+                        <a href="https://github.com/anirudhJoshi1112" target="_blank" rel="noopener noreferrer" style="color: greenyellow; font-size: 18px;"><br>Check Out Projects on GitHub</a>
+                    </div>
+                    <div class="project-card">
+                        <h2> 🤖 Machine Learning </h2>
+                        
+                        <div class="tech-stack" style="color: aqua;">
+                            <h3> <br> Deep Learning </h3>
+                            <h3> Natural Language Preprocessing (NLP) </h3>
+                            <h3> Basic Computer Vision </h3>
+                        </div>
+                        <a href="https://github.com/anirudhJoshi1112" target="_blank" rel="noopener noreferrer" style="color: greenyellow; font-size: 18px;"> <br>Check Out Projects on GitHub</a>
+                    </div>
+                    <div class="project-card">
+                        <h2> 💻 Tech-Stacks </h2>
+                        
+                        <div class="tech-stack" style="color: aqua;">
+                            <h3> <br> C/C++ </h3>
+                            <h3> Java </h3>
+                            <h3>Python</h3>
+                            <h3> Data Structures and Algorithms </h3>
+                            <h3>SQL</h3>
+                        </div>
+                        <a href="https://github.com/anirudhJoshi1112" target="_blank" rel="noopener noreferrer" style="color: greenyellow; font-size: 18px;"><br>Check Out Projects on GitHub</a>
+                    </div>
+                    <!-- Add more project cards -->
+                </div>
+            </section>
+
+            <!-- Connect Section -->
+            <section class="content-section" id="connect">
+                <h2>📱Let's Connect</h2>
+                <div class="social-links">
+                    <a href="https://github.com/anirudhJoshi1112" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/anirudh-joshi-742147221/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Header Hide/Show Logic
+        let lastScroll = 0;
+        const header = document.querySelector('.main-header');
+        const headerHeight = header.offsetHeight;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > lastScroll && currentScroll > headerHeight) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // Smooth Scroll with Offset
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                const targetPosition = target.offsetTop - headerHeight;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.content-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Random blob movement
+        document.querySelectorAll('.blob').forEach(blob => {
+            blob.style.animationDelay = `${Math.random() * 20}s`;
+        });
+    </script>
+</body>
+</html>
