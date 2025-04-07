@@ -47,6 +47,7 @@ portfolio-website/ ├── index.html
 
 '''bash
 git clone https://github.com/anirudhJoshi1112/PortFolio.git
+
 cd PortFolio
 
 ---
@@ -74,7 +75,7 @@ If you'd like to connect, feel free to reach out:
 👨‍💻 Author
 Anirudh Joshi
 
-📧 anirudhjoshi741@gmail.com
+📧 E-Mail : anirudhjoshi741@gmail.com
 
 🔗 LinkedIn : https://www.linkedin.com/in/anirudh-joshi-742147221/
 
