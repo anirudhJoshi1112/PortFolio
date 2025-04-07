@@ -75,7 +75,9 @@ If you'd like to connect, feel free to reach out:
 Anirudh Joshi
 
 📧 anirudhjoshi741@gmail.com
+
 🔗 LinkedIn : https://www.linkedin.com/in/anirudh-joshi-742147221/
+
 💻 Portfolio Website : https://anirudh-joshi.vercel.app/
 
 ---
